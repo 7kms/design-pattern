@@ -2,3 +2,4 @@
 
 
 1. [原型模式](./prototype/index.md)
+2. [单例模式](./singleton/index.md)
