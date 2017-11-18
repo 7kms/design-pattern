@@ -120,6 +120,34 @@ proxyImage.setSrc('https://img.example.comg/large-picture.png');
 
 ```
 
+### 缓存代理
+
+缓存代理可以为一些开销大的运算结果提供暂时的存储,在下次运算时,如果传进来的参数跟之前一致,则可以直接返回前面存储的结果.
+
+```js
+var mult = function(){ 
+    console.log( '开始计算乘积' ); 
+    var a = 1;
+    for ( var i = 0, l = arguments.length; i < l; i++ ){
+        a = a* arguments[i];
+    }
+    return a
+}
+var proxyMult = (function(){
+    var cache = {};
+    return function(){
+        var args = Array.prototype.join.call( arguments, ',' ); 
+        if ( args in cache ){
+            return cache[ args ]; 
+        }
+        return cache[ args ] = mult.apply( this, arguments ); 
+    }
+})();
+//因为缓存,只会计算一次乘积
+console.log(proxyMult( 1, 2, 3, 4 ))
+console.log(proxyMult( 1, 2, 3, 4 ))
+```
 
 
+代理模式包括许多分类，在 JavaScript 开发中最常用的是虚拟代理和缓存代理。虽然代理模式非常有用，但我们在编写业务代码的时候，往往不需要去事先去判定是否需要使用代理模式。 当发现不方便直接访问某个对象的时候，再使用代理模式。
 
