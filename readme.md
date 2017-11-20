@@ -5,3 +5,4 @@
 2. [单例模式](./singleton/index.md)
 3. [策略模式](./strategy/index.md)
 4. [代理模式](./proxy/index.md)
+5. [迭代器模式](./iterator/index.md)
