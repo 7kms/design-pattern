@@ -31,22 +31,70 @@
 
 ```
 
-### 内部迭代器
+### 应用
+
+1. 内部迭代器
 
 jQuery 的each可以看做是内部迭代器, each 函数的内部已经定义好了迭代规则,它完全接手整个迭代过程,外部只需要一次初始调用
 
-### 外部迭代器
+2. 外部迭代器
 
 外部迭代器必须显示的请求迭代下一个元素,这样可以手工控制迭代的过程或者顺序.
 
 ```js
 
-    var Iterator = function(obj){
-        var current = 0;
-        var next = function(){
-            current += 1;
-        };
+var Iterator = function(obj){
+    var current = 0;
+    var next = function(){
+        current += 1;
+    };
+    var isDone = function(){
+        return current >= obj.length;
+    };
+    var getCurrItem = function(){
+        return obj[current];
     }
+    return {
+        next,
+        isDone,
+        getCurrItem
+    }
+}
 
+var compare = function( iterator1, iterator2 ){
+    while( !iterator1.isDone() && !iterator2.isDone() ){
+        if ( iterator1.getCurrItem() !== iterator2.getCurrItem() ){ 
+            throw new Error ( 'iterator1 iterator2   ' );
+        } 
+        iterator1.next(); 
+        iterator2.next();
+    }
+    console.log('iterator1 和 iterator2相等'); 
+}
+var iterator1 = Iterator( [ 1, 2, 3 ] );
+var iterator2 = Iterator( [ 1, 2, 3 ] );
+
+compare(iterator1,iterator2);
+
+
+```
+3. 终止迭代器
+
+迭代器可以像普通 for循环中的break一样，提供一种跳出循环的方法.Jquery中的each函数就是可以终止的迭代器.
+
+```js
+
+var each = function( ary, callback ){
+    for ( var i = 0, l = ary.length; i < l; i++ ){
+        if ( callback( i, ary[ i ] ) === false ){ 
+            break;
+        } 
+    }
+}
+
+each( [ 1, 2, 3, 4, 5 ], function( i, n ){ 
+    if ( n > 3 ){ return false;}
+    console.log( n );
+});
 
 ```
