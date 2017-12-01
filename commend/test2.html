@@ -1,0 +1,33 @@
+<body>
+    <div id="ball" style="position:absolute;background:#000;width:50px;height:50px"></div>            <input id="pos"/>
+    <button id="moveBtn">    </button>
+    <button id="cancelBtn">cancel</cancel> 
+</body>
+<script>
+    var ball = document.getElementById( 'ball' );
+    var pos = document.getElementById( 'pos' );
+    var moveBtn = document.getElementById( 'moveBtn' );
+    var cancelBtn = document.getElementById( 'cancelBtn' );
+    var MoveCommand = function( receiver, pos ){ 
+        this.receiver = receiver;
+        this.pos = pos;
+        this.oldPos = null;
+    };
+    MoveCommand.prototype.execute = function(){
+        this.receiver.start( 'left', this.pos, 1000, 'strongEaseOut' );
+        this.oldPos = this.receiver.dom.getBoundingClientRect()[ this.receiver.propertyName ]; 11 //         前   
+    };
+    MoveCommand.prototype.undo = function(){
+        this.receiver.start( 'left', this.oldPos, 1000, 'strongEaseOut' ); //       前     
+    };
+    var moveCommand;
+
+    moveBtn.onclick = function(){
+        var animate = new Animate( ball );
+        moveCommand = new MoveCommand( animate, pos.value ); 
+        moveCommand.execute();
+    };
+    cancelBtn.onclick = function(){ 
+        moveCommand.undo(); //     
+    };
+</script>
