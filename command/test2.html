@@ -1,9 +1,14 @@
+
+
 <body>
     <div id="ball" style="position:absolute;background:#000;width:50px;height:50px"></div>            <input id="pos"/>
-    <button id="moveBtn">    </button>
+    <button id="moveBtn"></button>
     <button id="cancelBtn">cancel</cancel> 
 </body>
 <script>
+    /*
+        模拟一个使小球运动的场景,点击按钮让小球移动到一个新位置,点击取消回到最初的位置.
+    */
     var ball = document.getElementById( 'ball' );
     var pos = document.getElementById( 'pos' );
     var moveBtn = document.getElementById( 'moveBtn' );
@@ -15,19 +20,21 @@
     };
     MoveCommand.prototype.execute = function(){
         this.receiver.start( 'left', this.pos, 1000, 'strongEaseOut' );
-        this.oldPos = this.receiver.dom.getBoundingClientRect()[ this.receiver.propertyName ]; 11 //         前   
+        this.oldPos = this.receiver.dom.getBoundingClientRect()[ this.receiver.propertyName ];
     };
+    // 小球的原始位置在小球开始移动前已经作为 command 对象的属性保存起来，所以只需要提供一个 undo 方法，并在 undo 方法中让小球回到原始位置就可以了
+    // 如果用普通的方法调用来实现，也许每次都需要手工的记录小球运动的轨迹，才能让他还原到之前的位置。
     MoveCommand.prototype.undo = function(){
-        this.receiver.start( 'left', this.oldPos, 1000, 'strongEaseOut' ); //       前     
+        this.receiver.start( 'left', this.oldPos, 1000, 'strongEaseOut' );
     };
     var moveCommand;
 
     moveBtn.onclick = function(){
         var animate = new Animate( ball );
-        moveCommand = new MoveCommand( animate, pos.value ); 
+        moveCommand = new MoveCommand( animate, pos.value );
         moveCommand.execute();
     };
     cancelBtn.onclick = function(){ 
-        moveCommand.undo(); //     
+        moveCommand.undo();
     };
 </script>

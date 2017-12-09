@@ -7,4 +7,4 @@
 4. [代理模式](./proxy/index.md)
 5. [迭代器模式](./iterator/index.md)
 6. [发布订阅(观察者)模式](./observer/index.md)
-7. [命令模式](./commend/index.md)
+7. [命令模式](./command/index.md)

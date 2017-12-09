@@ -1,0 +1,52 @@
+<html>
+    <body>
+        <button id="replay"></button> 
+    </body>
+    <script>
+        /*
+            模拟一个播放游戏录像的场景
+            原理和 Canvas 画图的例子一样，我们把用户在键盘的输入都封装成命令,执行命令被存到堆栈中。播放录像的时候只需要从头开始执行这些命令即可
+        */
+        var Ryu = {
+            attack: function(){ 
+                console.log( 'attack' );
+            },
+            defense: function(){
+                console.log( 'defense' ); 
+            },
+            jump: function(){ 
+                console.log( 'jump' );
+            },
+            crouch: function(){
+                console.log( 'crouch' ); 
+            }
+        };
+        var makeCommand = function( receiver, state ){ 
+            return function(){
+                receiver[ state ]();
+            }
+        };
+        var commands = {
+            "119": "jump",
+            "115": "crouch",
+            "97": "defense", 
+            "100": "attack"
+        };
+        var commandStack = [];
+        document.onkeypress = function( ev ){
+            var keyCode = ev.keyCode,
+            command = makeCommand( Ryu, commands[ keyCode ] );
+            if (command){
+                command(); 
+                commandStack.push( command );
+            }
+        };
+        document.getElementById( 'replay' ).onclick = function(){
+            var command;
+            while( command = commandStack.shift() ){ 
+                command();
+            } 
+        };
+    </script>
+</html>
+
