@@ -8,4 +8,5 @@
 5. [迭代器模式](./iterator/index.md)
 6. [发布订阅(观察者)模式](./observer/index.md)
 7. [命令模式](./command/index.md)
-7. [组合模式](./composite/index.md)
+8. [组合模式](./composite/index.md)
+9. [模板方法模式](./template/index.md)
