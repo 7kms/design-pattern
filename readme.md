@@ -11,3 +11,4 @@
 8. [组合模式](./composite/index.md)
 9. [模板方法模式](./template/index.md)
 10. [享元模式](./flyweight/index.md)
+11. [职责链模式](./responsibility/index.md)
