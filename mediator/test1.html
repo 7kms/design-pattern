@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>普通方式实现(未引入中介者)</h1>
+    <div>
+        <div>
+            <span>选择颜色:</span>
+            <select id="colorSelect">
+                <option value="">请选择</option> 
+                <option value="red">红色</option> 
+                <option value="blue">蓝色</option>
+            </select>
+        </div>
+        <div>
+            <span>选择内存:</span>
+            <select id="memorySelect">
+                <option value="">请选择</option> 
+                <option value="32G">32G</option> 
+                <option value="16G">16G</option>
+            </select>
+        </div>
+        <div>
+            输入购买数量 : <input type="text" id="numberInput"/>
+        </div>
+    </div>
+    <div>
+        你选择了颜色 : <div id="colorInfo"></div><br/>       
+        你选择了内存 : <div id="memoryInfo"></div><br/>       
+        你输入了数量 : <div id="numberInfo"></div><br/>
+        <button id="nextBtn" disabled="true">请选择手机颜色和购买数量</button>
+    </div>
+    <script>
+        var colorSelect = document.getElementById( 'colorSelect' ),
+        numberInput = document.getElementById( 'numberInput' ), 
+        memorySelect = document.getElementById( 'memorySelect' ), 
+        colorInfo = document.getElementById( 'colorInfo' ), 
+        numberInfo = document.getElementById( 'numberInfo' ),
+        memoryInfo = document.getElementById( 'memoryInfo' ), 
+        nextBtn = document.getElementById( 'nextBtn' );
+        //检查输入的合法性
+        function check(){
+            var color = colorSelect.value,
+            memory = memorySelect.value,
+            stock = goods[ color + '|' + memory ];
+            var number = numberInput.value;//数量
+            
+            if ( !color ){
+                nextBtn.disabled = true; 
+                nextBtn.innerHTML = '请选择手机颜色'; 
+                return;
+            }
+            if ( !memory ){
+                nextBtn.disabled = true; 
+                nextBtn.innerHTML = '请选择手机内存'; 
+                return;
+            }
+            if ( ( ( number - 0 ) | 0 ) !== number - 0 ){
+                nextBtn.disabled = true;
+                nextBtn.innerHTML = '请输入正确的购买数量'; 
+                return;
+            }
+            if ( number > stock ){ // 当前选择的数量没有超过库存量        
+                nextBtn.disabled = true; 
+                nextBtn.innerHTML = '库存不足'; 
+                return ;
+            }
+            return true;
+        }
+    </script>
+    <script>
+        var goods = { //手机内存  
+            "red|32G": 3, // 红色32G数量为3
+            "red|16G": 0,
+            "blue|32G": 1,
+            "blue|16G": 6
+        };
+        colorSelect.onchange = function(){
+           colorInfo.innerHTML = this.value;
+           if(check()){
+            nextBtn.disabled = false; 
+            nextBtn.innerHTML = '放入购物车';
+           }
+        }
+        memorySelect.onchange = function(){
+            memoryInfo.innerHTML = this.value;  
+           if(check()){
+            nextBtn.disabled = false; 
+            nextBtn.innerHTML = '放入购物车';
+           }
+        }
+        numberInput.oninput = function(){
+            numberInfo.innerHTML = this.value;   
+           if(check()){
+            nextBtn.disabled = false; 
+            nextBtn.innerHTML = '放入购物车';
+           }
+        }
+    </script>
+</body>
+</html>
