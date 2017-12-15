@@ -1,0 +1,11 @@
+<html>
+    <button id="button"></button>
+    <script>
+        var _getElementById = document.getElementById;
+        document.getElementById = function(id){ 
+            console.log('=====装饰函数=====')
+            return _getElementById( id); 
+        }
+        var button = document.getElementById( 'button' );
+    </script>
+ </html>
