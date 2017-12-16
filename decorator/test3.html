@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="button"></button>
+    <script>
+        Function.prototype.before = function( beforefn ){
+            var __self = this;
+            return function(){ //返回了包含了原函数和新函数的装饰函数
+                beforefn.apply( this, arguments ); //执行新函数,且保证this不被劫持.新函数接受的参数也会原封不动的传递给原函数
+                return __self.apply( this, arguments ); //执行原函数并返回原函数的执行结果,并且保证this不被劫持
+            } 
+        };
+        Function.prototype.after = function( afterfn ){ 
+            var __self = this;
+            return function(){
+                var ret = __self.apply( this, arguments );
+                afterfn.apply( this, arguments );
+                return ret;
+            }
+        };
+        document.getElementById = document.getElementById.before(function(){ console.log ('装饰函数');});
+        var button = document.getElementById( 'button' );
+        console.log(button);
+
+        window.onload = function(){
+            console.log('window onload');
+        }
+
+        window.onload = window.onload.after(function(){
+            console.log('after onload 1')
+        }).after(function(){
+            console.log('after onload 2')
+        })
+    </script>
+</body>
+</html>
