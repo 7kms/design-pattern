@@ -15,4 +15,4 @@
 12. [中介者模式](./mediator/index.md)
 13. [装饰者模式](./decorator/index.md)
 14. [状态模式](./status/index.md)
-14. [适配器模式](./adapter/index.md)
+15. [适配器模式](./adapter/index.md)
