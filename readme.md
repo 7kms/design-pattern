@@ -1,5 +1,6 @@
 # 重读 javascript 设计模式
 
+### 设计模式
 
 1. [原型模式](./prototype/index.md)
 2. [单例模式](./singleton/index.md)
@@ -16,3 +17,9 @@
 13. [装饰者模式](./decorator/index.md)
 14. [状态模式](./status/index.md)
 15. [适配器模式](./adapter/index.md)
+
+### 设计原则和编程技巧
+1. 单一职责问题
+2. 最少知识原则
+3. 开放-封闭原则
+4. 接口和面向接口编程
